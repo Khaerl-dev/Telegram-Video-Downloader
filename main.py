@@ -6,7 +6,7 @@ from flask import Flask
 
 # 1. KONFIGURASI TOKEN
 # Bot akan mengambil token dari environment variable, atau langsung dari string di bawah ini
-BOT_TOKEN = os.environ.get('BOT_TOKEN', 'GANTI_TEKS_INI_DENGAN_TOKEN_ANDA')
+BOT_TOKEN = os.environ.get('BOT_TOKEN', '8891518666:AAEcdMeyG9WErqueEBtHuY-JKQmUwSB6NzY')
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # 2. DUMMY WEB SERVER (Wajib untuk Cloud Hosting seperti Render agar tidak crash)
