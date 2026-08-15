@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Bot</title>
+    <style>
+        /* Mengatur latar belakang menjadi hitam pekat */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: monospace; /* Font bergaya terminal/coding */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        /* Membuat antarmuka berbentuk tabel/kotak sederhana */
+        .dashboard-box {
+            border: 2px solid #333333; /* Garis tepi abu-abu gelap */
+            padding: 30px;
+            text-align: center;
+            background-color: #111111; /* Hitam yang sedikit lebih terang untuk dimensi */
+        }
+
+        /* Mengatur ukuran teks nama bot */
+        .bot-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        /* Kelas untuk membuat efek berkedip (blink) */
+        .blink {
+            animation: blinker 1.5s linear infinite;
+        }
+
+        /* Logika animasi CSS untuk mengubah visibilitas (berkedip) */
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Wadah tabel hitam di tengah halaman -->
+    <div class="dashboard-box">
+        <div class="bot-name">[BOT PENGUNDUH VIDEO]</div>
+        <div>[<span class="blink">🟢</span> ONLINE]</div>
+    </div>
+
+</body>
+</html>
+
