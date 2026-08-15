@@ -18,17 +18,15 @@ def home():
         with open('dashboard.html', 'r', encoding='utf-8') as file:
             return file.read()
     except Exception as e:
-        # Teks statis diubah menjadi placeholder
         return "[007]"
 
 def run_server():
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
 
-# 3. LOGIKA BOT PENGUNDUH DENGAN PLACEHOLDER TEKS
+# 3. LOGIKA BOT PENGUNDUH DENGAN FORMAT TOLERAN
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    # Teks sambutan statis diubah menjadi placeholder
     bot.reply_to(message, "[001]")
 
 @bot.message_handler(func=lambda message: True)
@@ -38,15 +36,16 @@ def handle_message(message):
     
     if urls:
         target_url = urls[0] 
-        # Teks loading statis diubah menjadi placeholder
         processing_msg = bot.reply_to(message, "[002]")
         
         try:
             ydl_opts = {
                 'outtmpl': 'video_%(id)s.%(ext)s',
-                # SOLUSI ERROR FORMAT: Mengubah ke 'b[ext=mp4]/b' (best pre-merged)
-                # Artinya: Cari file mp4 tunggal terbaik, jika tidak ada, ambil format tunggal terbaik apa saja.
-                'format': 'b[ext=mp4]/b',
+                # SOLUSI DEFINITIF ERROR FORMAT: 
+                # Menggunakan rantai prioritas (fallback chain). 
+                # Jika tidak ada best tunggal, ambil resolusi lebih rendah (<=720p, <=480p, dll) 
+                # yang sudah berisi audio dan video dalam satu paket tanpa perlu FFmpeg.
+                'format': 'best[ext=mp4]/best[height<=720]/best[height<=480]/worst', 
                 'max_filesize': 50000000, 
                 'quiet': True,
                 'nocheckcertificate': True,
@@ -67,7 +66,6 @@ def handle_message(message):
                     message.chat.id, 
                     video, 
                     reply_to_message_id=message.message_id, 
-                    # Teks sukses statis adalah placeholder [003], digabungkan dengan variabel hasil fetch (video_title)
                     caption=f"[003]\n<b>{video_title}</b>",
                     parse_mode='HTML' 
                 )
@@ -76,19 +74,16 @@ def handle_message(message):
             bot.delete_message(message.chat.id, processing_msg.message_id)
             
         except yt_dlp.utils.DownloadError as e:
-            # Teks error unduhan statis adalah [004], digabungkan dengan variabel error spesifik
             bot.edit_message_text(f"[004]\nDetail: {str(e)}", message.chat.id, processing_msg.message_id)
         except Exception as e:
-            # Teks error sistem statis adalah [005], digabungkan dengan variabel error sistem
             bot.edit_message_text(f"[005]\nDetail: {str(e)}", message.chat.id, processing_msg.message_id)
             
     else:
-        # Teks link tidak valid statis diubah menjadi placeholder
         bot.reply_to(message, "[006]")
 
 # 4. EKSEKUSI PROGRAM
 if __name__ == '__main__':
     server_thread = threading.Thread(target=run_server)
     server_thread.start()
-    print("Sistem berjalan dengan Placeholder UI...")
+    print("Sistem berjalan dengan Rantai Prioritas Format...")
     bot.infinity_polling()
