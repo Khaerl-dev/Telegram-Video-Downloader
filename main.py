@@ -6,7 +6,7 @@ import re # Library regex untuk mendeteksi keberadaan URL dalam teks
 from flask import Flask
 
 # 1. KONFIGURASI TOKEN BOT TELEGRAM
-BOT_TOKEN = os.environ.get('BOT_TOKEN', 'GANTI_TEKS_INI_DENGAN_TOKEN_ANDA')
+BOT_TOKEN = os.environ.get('BOT_TOKEN', '8891518666:AAEcdMeyG9WErqueEBtHuY-JKQmUwSB6NzY')
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # 2. WEB SERVER BERSYARAT (MEMBACA FILE EXTERNAL)
