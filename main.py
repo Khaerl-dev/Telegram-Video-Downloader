@@ -6,9 +6,14 @@ import re
 import requests # Ditambahkan untuk memanggil API pihak ketiga
 from flask import Flask
 
-# 1. KONFIGURASI TOKEN BOT TELEGRAM
-# PENTING: Ganti token ini jika Anda sudah melakukan Revoke di BotFather
-BOT_TOKEN = os.environ.get('BOT_TOKEN', '8891518666:AAFQsJKm2FlECVgZc6Tlrtv0LEwG864-oas')
+# KODE BARU (AMAN & DINAMIS)
+# Menggunakan os.getenv agar tidak perlu menuliskan nilai pengganti
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+
+# Memastikan bot tidak berjalan jika token tidak ditemukan di server
+if not BOT_TOKEN:
+    raise ValueError("Token tidak ditemukan! Pastikan BOT_TOKEN sudah diisi di tab Environment Render.com")
+
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # 2. WEB SERVER BERSYARAT
